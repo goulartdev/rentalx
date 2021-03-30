@@ -1,13 +1,23 @@
 import Category from "../../model/category";
-import CategoryRepository, {
+import CategoriesRepository, {
   CreateCategoryParams,
-} from "../categories.repository";
+} from "../port/categories.repository";
 
-class InMemoryCategoryRepository implements CategoryRepository {
+class InMemoryCategoryRepository implements CategoriesRepository {
+  private static instance: CategoriesRepository;
+
   private categories: Category[];
 
-  constructor() {
+  private constructor() {
     this.categories = [];
+  }
+
+  public static getInstance(): CategoriesRepository {
+    if (!InMemoryCategoryRepository.instance) {
+      InMemoryCategoryRepository.instance = new InMemoryCategoryRepository();
+    }
+
+    return InMemoryCategoryRepository.instance;
   }
 
   create({ name, description }: CreateCategoryParams): void {
@@ -16,6 +26,7 @@ class InMemoryCategoryRepository implements CategoryRepository {
     Object.assign(category, {
       name,
       description,
+      createdAt: new Date(),
     });
 
     this.categories.push(category);

@@ -9,7 +9,6 @@ class Category {
   constructor() {
     if (!this.id) {
       this.id = uuidV4();
-      this.createdAt = new Date();
     }
   }
 }

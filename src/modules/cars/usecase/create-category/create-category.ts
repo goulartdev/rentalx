@@ -1,8 +1,8 @@
 import CategoryRepository, {
   CreateCategoryParams,
-} from "../repositories/categories.repository";
+} from "../../repositories/port/categories.repository";
 
-class CreateCategoryService {
+class CreateCategory {
   constructor(private categoriesRepository: CategoryRepository) {
     //
   }
@@ -18,4 +18,4 @@ class CreateCategoryService {
   }
 }
 
-export default CreateCategoryService;
+export default CreateCategory;

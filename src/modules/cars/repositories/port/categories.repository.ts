@@ -1,11 +1,11 @@
-import Category from "../model/category";
+import Category from "../../model/category";
 
 interface CreateCategoryParams {
   name: string;
   description: string;
 }
 
-interface CategoryRepository {
+interface CategoriesRepository {
   create(params: CreateCategoryParams): void;
   list(): Category[];
   findByName(name: string): Category | undefined;
@@ -13,4 +13,4 @@ interface CategoryRepository {
 
 export { CreateCategoryParams };
 
-export default CategoryRepository;
+export default CategoriesRepository;

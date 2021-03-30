@@ -23,7 +23,7 @@
     "class-methods-use-this": "off",
     "no-console": "off",
     "no-useless-constructor": "off",
-    "max-len": ["error", { "code": 88 }],
+    "max-len": "off",
     "lines-between-class-members": [
       "error",
       "always",
