@@ -1,4 +1,4 @@
-import Specification from "../../model/specification";
+import Specification from "../../entities/specification";
 
 interface CreateSpecificationParams {
   name: string;
@@ -6,9 +6,9 @@ interface CreateSpecificationParams {
 }
 
 interface SpecificationsRepository {
-  create(params: CreateSpecificationParams): void;
-  list(): Specification[];
-  findByName(name: string): Specification | undefined;
+  create(params: CreateSpecificationParams): Promise<void>;
+  list(): Promise<Specification[]>;
+  findByName(name: string): Promise<Specification | undefined>;
 }
 
 export { CreateSpecificationParams };

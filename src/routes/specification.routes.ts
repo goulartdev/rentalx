@@ -6,11 +6,11 @@ import listSpecificationsController from "../modules/cars/usecase/list-specifica
 const specificationRoutes = Router();
 
 specificationRoutes.post("/", (request, response) => {
-  return specificationController.handle(request, response);
+  return specificationController().handle(request, response);
 });
 
 specificationRoutes.get("/", (request, response) => {
-  return listSpecificationsController.handle(request, response);
+  return listSpecificationsController().handle(request, response);
 });
 
 export default specificationRoutes;

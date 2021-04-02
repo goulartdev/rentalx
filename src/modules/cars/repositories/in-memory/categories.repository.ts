@@ -1,4 +1,4 @@
-import Category from "../../model/category";
+import Category from "../../entities/category";
 import CategoriesRepository, {
   CreateCategoryParams,
 } from "../port/categories.repository";
@@ -20,7 +20,7 @@ class InMemoryCategoryRepository implements CategoriesRepository {
     return InMemoryCategoryRepository.instance;
   }
 
-  create({ name, description }: CreateCategoryParams): void {
+  async create({ name, description }: CreateCategoryParams): Promise<void> {
     const category = new Category();
 
     Object.assign(category, {
@@ -32,11 +32,11 @@ class InMemoryCategoryRepository implements CategoriesRepository {
     this.categories.push(category);
   }
 
-  list(): Category[] {
+  async list(): Promise<Category[]> {
     return this.categories;
   }
 
-  findByName(name: string): Category | undefined {
+  async findByName(name: string): Promise<Category | undefined> {
     return this.categories.find((category) => category.name === name);
   }
 }

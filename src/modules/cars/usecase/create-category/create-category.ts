@@ -7,14 +7,14 @@ class CreateCategory {
     //
   }
 
-  execute({ name, description }: CreateCategoryParams): void {
-    const existingCategory = this.categoriesRepository.findByName(name);
+  async execute({ name, description }: CreateCategoryParams): Promise<void> {
+    const existingCategory = await this.categoriesRepository.findByName(name);
 
     if (existingCategory) {
       throw new Error(`A category whit the name ${name} already exists`);
     }
 
-    this.categoriesRepository.create({ name, description });
+    await this.categoriesRepository.create({ name, description });
   }
 }
 

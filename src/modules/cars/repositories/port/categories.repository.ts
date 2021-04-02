@@ -1,4 +1,4 @@
-import Category from "../../model/category";
+import Category from "../../entities/category";
 
 interface CreateCategoryParams {
   name: string;
@@ -6,9 +6,9 @@ interface CreateCategoryParams {
 }
 
 interface CategoriesRepository {
-  create(params: CreateCategoryParams): void;
-  list(): Category[];
-  findByName(name: string): Category | undefined;
+  create(params: CreateCategoryParams): Promise<void>;
+  list(): Promise<Category[]>;
+  findByName(name: string): Promise<Category | undefined>;
 }
 
 export { CreateCategoryParams };

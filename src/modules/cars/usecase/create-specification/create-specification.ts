@@ -7,14 +7,14 @@ class CreateSpecification {
     //
   }
 
-  execute({ name, description }: CreateSpecificationParams): void {
-    const existingSpecification = this.specificationRepository.findByName(name);
+  async execute({ name, description }: CreateSpecificationParams): Promise<void> {
+    const existingSpecification = await this.specificationRepository.findByName(name);
 
     if (existingSpecification) {
       throw new Error(`A specification whit the name ${name} already exists`);
     }
 
-    this.specificationRepository.create({ name, description });
+    await this.specificationRepository.create({ name, description });
   }
 }
 
