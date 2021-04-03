@@ -1,9 +1,15 @@
+import { inject, injectable } from "tsyringe";
+
 import SpecificationsRepository, {
   CreateSpecificationParams,
 } from "../../repositories/port/specifications.repository";
 
+@injectable()
 class CreateSpecification {
-  constructor(private specificationRepository: SpecificationsRepository) {
+  constructor(
+    @inject("SpecificationsRepository")
+    private specificationRepository: SpecificationsRepository
+  ) {
     //
   }
 

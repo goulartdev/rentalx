@@ -1,17 +1,22 @@
 import csvParse from "csv-parse";
 import fs from "fs";
+import { inject, injectable } from "tsyringe";
 
 import CategoriesRepository, {
   CreateCategoryParams,
 } from "../../repositories/port/categories.repository";
 
+@injectable()
 class ImportCategories {
-  constructor(private categoriesRepository: CategoriesRepository) {
+  constructor(
+    @inject("CategoriesRepository") private categoriesRepository: CategoriesRepository
+  ) {
     //
   }
 
   async execute(filePath: string): Promise<void> {
     const categories = await this.loadCategories(filePath);
+
     categories.forEach(async ({ name, description }) => {
       const existing = this.categoriesRepository.findByName(name);
 

@@ -1,18 +1,16 @@
 import { Request, Response } from "express";
+import { container } from "tsyringe";
 
 import ImportCategories from "./import-categories";
 
 class ImportCategoriesController {
-  constructor(private importCategories: ImportCategories) {
-    //
-  }
-
   handle(request: Request, response: Response): Response {
     const { file } = request;
+    const importCategories = container.resolve(ImportCategories);
 
-    this.importCategories.execute(file.path);
+    importCategories.execute(file.path);
 
-    return response.send();
+    return response.status(201).send();
   }
 }
 

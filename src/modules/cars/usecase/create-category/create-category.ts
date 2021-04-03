@@ -1,9 +1,14 @@
+import { inject, injectable } from "tsyringe";
+
 import CategoryRepository, {
   CreateCategoryParams,
 } from "../../repositories/port/categories.repository";
 
+@injectable()
 class CreateCategory {
-  constructor(private categoriesRepository: CategoryRepository) {
+  constructor(
+    @inject("CategoriesRepository") private categoriesRepository: CategoryRepository
+  ) {
     //
   }
 
