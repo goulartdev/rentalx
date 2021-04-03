@@ -1,0 +1,108 @@
+---
+openapi: 3.0.0
+info:
+  title: RentalX Documentation
+  description: This is an API Rent
+  version: 1.0.0
+  contact:
+    email: some@email.com.br
+paths:
+  "/categories":
+    post:
+      tags:
+      - Category
+      summary: Create category
+      description: Creates a new category
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/definitions/Category"
+            example:
+              name: Category ex
+              description: Some category example
+      responses:
+        '201':
+          description: Category created successfully
+        '500':
+          description: Category already exists
+    get:
+      tags:
+      - Category
+      summary: List all categories
+      description: Return a list with all categories
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/definitions/Category"
+  "/categories/import":
+    post:
+      tags:
+      - Category
+      summary: Import categories
+      description: Import categories from a CSV
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        '201':
+          description: Categories imported successfully
+  "/specifications":
+    post:
+      tags:
+      - Specification
+      summary: Creates specification
+      description: Creates a new specification
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/definitions/Specification"
+            example:
+              name: Specification ex
+              description: Some specification example
+      responses:
+        '201':
+          description: Specification created successfully
+        '500':
+          description: Specification already exists
+    get:
+      tags:
+      - Specification
+      summary: List all specifications
+      description: Return a list with all specifications
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/definitions/Specification"
+definitions:
+  Category:
+    type: object
+    properties:
+      name:
+        type: string
+      description:
+        type: string
+  Specification:
+    type: object
+    properties:
+      name:
+        type: string
+      description:
+        type: string
