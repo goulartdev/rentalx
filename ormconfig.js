@@ -9,7 +9,7 @@ module.exports = {
   "database": "rentalx",
   "namingStrategy": new SnakeNamingStrategy,
   "entities": [
-    "./src/modules/cars/entities/*.ts"
+    "./src/modules/**/entities/*.ts",
   ],
   "migrations": [
     "./src/database/migrations/*.ts"
