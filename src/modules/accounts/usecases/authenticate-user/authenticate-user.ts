@@ -5,7 +5,7 @@ import { inject, injectable } from "tsyringe";
 import AppError from "../../../../errors/app-error";
 import UserRepository from "../../repositories/port/users.repository";
 
-interface AuthDTO {
+interface AuthParams {
   email: string;
   password: string;
 }
@@ -24,7 +24,7 @@ class AuthenticateUser {
     //
   }
 
-  async execute({ email, password }: AuthDTO): Promise<AuthPayload> {
+  async execute({ email, password }: AuthParams): Promise<AuthPayload> {
     const user = await this.usersRepository.findByEmail(email);
 
     if (!user) {
