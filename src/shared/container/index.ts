@@ -1,11 +1,11 @@
 import { container } from "tsyringe";
 
-import TypeORMUsersRepository from "../../modules/accounts/repositories/implementations/users.repository";
-import UserRepository from "../../modules/accounts/repositories/port/users.repository";
-import TypeORMCategoryRepository from "../../modules/cars/repositories/implementation/categories.repository";
-import TypeORMSpecificationRepository from "../../modules/cars/repositories/implementation/specifications.repository";
-import CategoriesRepository from "../../modules/cars/repositories/port/categories.repository";
-import SpecificationsRepository from "../../modules/cars/repositories/port/specifications.repository";
+import UsersRepository from "@modules/accounts/repositories/port/users.repository";
+import TypeORMUsersRepository from "@modules/accounts/repositories/type-orm/users.repository";
+import CategoriesRepository from "@modules/cars/repositories/port/categories.repository";
+import SpecificationsRepository from "@modules/cars/repositories/port/specifications.repository";
+import TypeORMCategoryRepository from "@modules/cars/repositories/type-orm/categories.repository";
+import TypeORMSpecificationRepository from "@modules/cars/repositories/type-orm/specifications.repository";
 
 container.registerSingleton<CategoriesRepository>(
   "CategoriesRepository",
@@ -17,4 +17,4 @@ container.registerSingleton<SpecificationsRepository>(
   TypeORMSpecificationRepository
 );
 
-container.registerSingleton<UserRepository>("UsersRepository", TypeORMUsersRepository);
+container.registerSingleton<UsersRepository>("UsersRepository", TypeORMUsersRepository);

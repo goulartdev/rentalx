@@ -1,9 +1,9 @@
-import Category from "../../entities/category";
+import Category from "@modules/cars/entities/category";
 import CategoriesRepository, {
   CreateCategoryParams,
-} from "../port/categories.repository";
+} from "@modules/cars/repositories/port/categories.repository";
 
-class InMemoryCategoryRepository implements CategoriesRepository {
+class InMemoryCategoriesRepository implements CategoriesRepository {
   private static instance: CategoriesRepository;
 
   private categories: Category[];
@@ -13,11 +13,11 @@ class InMemoryCategoryRepository implements CategoriesRepository {
   }
 
   public static getInstance(): CategoriesRepository {
-    if (!InMemoryCategoryRepository.instance) {
-      InMemoryCategoryRepository.instance = new InMemoryCategoryRepository();
+    if (!InMemoryCategoriesRepository.instance) {
+      InMemoryCategoriesRepository.instance = new InMemoryCategoriesRepository();
     }
 
-    return InMemoryCategoryRepository.instance;
+    return InMemoryCategoriesRepository.instance;
   }
 
   async create({ name, description }: CreateCategoryParams): Promise<void> {
@@ -41,4 +41,4 @@ class InMemoryCategoryRepository implements CategoriesRepository {
   }
 }
 
-export default InMemoryCategoryRepository;
+export default InMemoryCategoriesRepository;

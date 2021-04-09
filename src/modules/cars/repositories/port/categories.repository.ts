@@ -1,4 +1,4 @@
-import Category from "../../entities/category";
+import Category from "@modules/cars/entities/category";
 
 interface CreateCategoryParams {
   name: string;

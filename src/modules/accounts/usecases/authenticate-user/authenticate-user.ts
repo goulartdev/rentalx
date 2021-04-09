@@ -2,8 +2,8 @@ import { compare } from "bcrypt";
 import { sign } from "jsonwebtoken";
 import { inject, injectable } from "tsyringe";
 
-import AppError from "../../../../errors/app-error";
-import UserRepository from "../../repositories/port/users.repository";
+import AppError from "@errors/app-error";
+import UsersRepository from "@modules/accounts/repositories/port/users.repository";
 
 interface AuthParams {
   email: string;
@@ -20,7 +20,7 @@ interface AuthPayload {
 
 @injectable()
 class AuthenticateUser {
-  constructor(@inject("UsersRepository") private usersRepository: UserRepository) {
+  constructor(@inject("UsersRepository") private usersRepository: UsersRepository) {
     //
   }
 

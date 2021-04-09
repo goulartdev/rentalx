@@ -1,9 +1,11 @@
 import { getRepository, Repository } from "typeorm";
 
-import User from "../../entities/user";
-import UserRepository, { CreateUserDTO } from "../port/users.repository";
+import User from "@modules/accounts/entities/user";
+import UsersRepository, {
+  CreateUserDTO,
+} from "@modules/accounts/repositories/port/users.repository";
 
-class TypeORMUsersRepository implements UserRepository {
+class TypeORMUsersRepository implements UsersRepository {
   private repository: Repository<User>;
 
   constructor() {

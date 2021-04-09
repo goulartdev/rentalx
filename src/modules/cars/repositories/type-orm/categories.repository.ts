@@ -1,9 +1,9 @@
 import { getRepository, Repository } from "typeorm";
 
-import Category from "../../entities/category";
+import Category from "@modules/cars/entities/category";
 import CategoriesRepository, {
   CreateCategoryParams,
-} from "../port/categories.repository";
+} from "@modules/cars/repositories/port/categories.repository";
 
 class TypeORMCategoryRepository implements CategoriesRepository {
   private repository: Repository<Category>;

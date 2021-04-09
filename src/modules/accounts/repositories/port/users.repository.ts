@@ -1,4 +1,4 @@
-import User from "../../entities/user";
+import User from "@modules/accounts/entities/user";
 
 interface CreateUserDTO {
   name: string;
@@ -9,7 +9,7 @@ interface CreateUserDTO {
   avatar?: string;
 }
 
-interface UserRepository {
+interface UsersRepository {
   create(params: CreateUserDTO): Promise<void>;
   findByEmail(email: string): Promise<User | undefined>;
   findById(id: string): Promise<User | undefined>;
@@ -17,4 +17,4 @@ interface UserRepository {
 
 export { CreateUserDTO };
 
-export default UserRepository;
+export default UsersRepository;

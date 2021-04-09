@@ -1,7 +1,7 @@
-import Specification from "../../entities/specification";
+import Specification from "@modules/cars/entities/specification";
 import SpecificationsRepository, {
   CreateSpecificationParams,
-} from "../port/specifications.repository";
+} from "@modules/cars/repositories/port/specifications.repository";
 
 class InMemorySpecificationRepository implements SpecificationsRepository {
   private static instance: SpecificationsRepository;
@@ -20,7 +20,7 @@ class InMemorySpecificationRepository implements SpecificationsRepository {
     return InMemorySpecificationRepository.instance;
   }
 
-  create({ name, description }: CreateSpecificationParams): void {
+  async create({ name, description }: CreateSpecificationParams): Promise<void> {
     const specification = new Specification();
 
     Object.assign(specification, {
@@ -32,14 +32,12 @@ class InMemorySpecificationRepository implements SpecificationsRepository {
     this.specifications.push(specification);
   }
 
-  list(): Specification[] {
+  async list(): Promise<Specification[]> {
     return this.specifications;
   }
 
-  findByName(name: string): Specification | undefined {
-    return this.specifications.find(
-      (specification) => specification.name === name
-    );
+  async findByName(name: string): Promise<Specification | undefined> {
+    return this.specifications.find((specification) => specification.name === name);
   }
 }
 

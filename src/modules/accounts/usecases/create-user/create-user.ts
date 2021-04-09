@@ -1,14 +1,14 @@
 import { hash } from "bcrypt";
 import { inject, injectable } from "tsyringe";
 
-import AppError from "../../../../errors/app-error";
-import UserRepository, {
+import AppError from "@errors/app-error";
+import UsersRepository, {
   CreateUserDTO,
-} from "../../repositories/port/users.repository";
+} from "@modules/accounts/repositories/port/users.repository";
 
 @injectable()
 class CreateUser {
-  constructor(@inject("UsersRepository") private usersRepository: UserRepository) {
+  constructor(@inject("UsersRepository") private usersRepository: UsersRepository) {
     //
   }
 

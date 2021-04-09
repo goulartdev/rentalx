@@ -4,7 +4,7 @@ import { inject, injectable } from "tsyringe";
 
 import CategoriesRepository, {
   CreateCategoryParams,
-} from "../../repositories/port/categories.repository";
+} from "@modules/cars/repositories/port/categories.repository";
 
 @injectable()
 class ImportCategories {

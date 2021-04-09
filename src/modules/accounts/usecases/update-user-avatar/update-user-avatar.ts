@@ -1,8 +1,8 @@
 import { inject, injectable } from "tsyringe";
 
-import AppError from "../../../../errors/app-error";
-import { deleteFile } from "../../../../utils/file";
-import UserRepository from "../../repositories/port/users.repository";
+import AppError from "@errors/app-error";
+import UsersRepository from "@modules/accounts/repositories/port/users.repository";
+import { deleteFile } from "@utils/file";
 
 interface UpdateUserAvatarParams {
   userId: string;
@@ -11,7 +11,7 @@ interface UpdateUserAvatarParams {
 
 @injectable()
 class UpdateUserAvatar {
-  constructor(@inject("UsersRepository") private usersRepository: UserRepository) {
+  constructor(@inject("UsersRepository") private usersRepository: UsersRepository) {
     //
   }
 
