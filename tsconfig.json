@@ -10,8 +10,8 @@
       "@modules/*": ["modules/*"],
       "@config/*": ["config/*"],
       "@shared/*": ["shared/*"],
-      "@errors/*": ["errors/*"],
-      "@utils/*": ["utils/*"]
+      "@utils/*": ["utils/*"],
+      "@externals/*": ["externals/*"]
     },
     "esModuleInterop": true,
     "resolveJsonModule": true,

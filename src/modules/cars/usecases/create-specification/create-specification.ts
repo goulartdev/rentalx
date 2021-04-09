@@ -1,6 +1,6 @@
 import { inject, injectable } from "tsyringe";
 
-import AppError from "@errors/app-error";
+import AppError from "@shared/errors/app-error";
 import SpecificationsRepository, {
   CreateSpecificationParams,
 } from "@modules/cars/repositories/port/specifications.repository";

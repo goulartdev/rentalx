@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import { verify } from "jsonwebtoken";
 
-import AppError from "@errors/app-error";
-import TypeORMUsersRepository from "@modules/accounts/repositories/type-orm/users.repository";
+import TypeORMUsersRepository from "@modules/accounts/externals/typeorm/repositories/users.repository";
+import AppError from "@shared/errors/app-error";
 
 interface AuthPayload {
   sub: string;

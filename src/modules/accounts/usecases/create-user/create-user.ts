@@ -1,7 +1,7 @@
 import { hash } from "bcrypt";
 import { inject, injectable } from "tsyringe";
 
-import AppError from "@errors/app-error";
+import AppError from "@shared/errors/app-error";
 import UsersRepository, {
   CreateUserDTO,
 } from "@modules/accounts/repositories/port/users.repository";

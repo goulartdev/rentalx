@@ -12,9 +12,9 @@ module.exports = {
     "./src/modules/**/entities/*.ts",
   ],
   "migrations": [
-    "./src/database/migrations/*.ts"
+    "./src/externals/typeorm/migrations/*.ts"
   ],
   "cli": {
-    "migrationsDir": "./src/database/migrations"
+    "migrationsDir": "./src/externals/typeorm/migrations"
   }
 }

@@ -1,9 +1,9 @@
-import AppError from "@errors/app-error";
 import InMemoryUsersRepository from "@modules/accounts/repositories/in-memory/users.repository";
 import UsersRepository, {
   CreateUserDTO,
 } from "@modules/accounts/repositories/port/users.repository";
 import CreateUser from "@modules/accounts/usecases/create-user/create-user";
+import AppError from "@shared/errors/app-error";
 
 import AuthenticateUser from "./authenticate-user";
 

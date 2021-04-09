@@ -1,6 +1,6 @@
-import AppError from "@errors/app-error";
 import InMemoryCategoryRepository from "@modules/cars/repositories/in-memory/categories.repository";
 import CategoriesRepository from "@modules/cars/repositories/port/categories.repository";
+import AppError from "@shared/errors/app-error";
 
 import CreateCategory from "./create-category";
 

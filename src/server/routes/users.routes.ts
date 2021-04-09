@@ -5,7 +5,7 @@ import uploadConfig from "@config/upload";
 import CreateUserController from "@modules/accounts/usecases/create-user/create-user.controller";
 import UpdateUserAvatarController from "@modules/accounts/usecases/update-user-avatar/update-user-avatar.controller";
 
-import { ensureAutheticated } from "../middlewares/ensureAuthenticated";
+import { ensureAutheticated } from "../middlewares/ensure-authenticated";
 
 const usersRoutes = Router();
 

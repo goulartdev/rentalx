@@ -1,4 +1,4 @@
-import User from "@modules/accounts/entities/user";
+import User from "@modules/accounts/externals/typeorm/entities/user";
 import UsersRepository, {
   CreateUserDTO,
 } from "@modules/accounts/repositories/port/users.repository";

@@ -1,6 +1,6 @@
 import { getRepository, Repository } from "typeorm";
 
-import Specification from "@modules/cars/entities/specification";
+import Specification from "@modules/cars/externals/typeorm/entities/specification";
 import SpecificationsRepository, {
   CreateSpecificationParams,
 } from "@modules/cars/repositories/port/specifications.repository";

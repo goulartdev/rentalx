@@ -1,6 +1,6 @@
 import { inject, injectable } from "tsyringe";
 
-import AppError from "@errors/app-error";
+import AppError from "@shared/errors/app-error";
 import UsersRepository from "@modules/accounts/repositories/port/users.repository";
 import { deleteFile } from "@utils/file";
 
