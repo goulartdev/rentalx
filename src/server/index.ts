@@ -4,10 +4,13 @@ import "express-async-errors";
 import swaggerUI from "swagger-ui-express";
 import YAML from "yamljs";
 
+import createConnection from "@externals/typeorm";
+
 import errorHandler from "./middlewares/error-handler";
 import router from "./routes";
-import "@externals/typeorm";
 import "@shared/container";
+
+createConnection();
 
 const swaggerDoc = YAML.load(`${__dirname}/../swagger.yaml`);
 

@@ -1,5 +1,6 @@
 import { Router } from "express";
 import multer from "multer";
+import ensureIsAdmin from "server/middlewares/ensure-admin";
 
 import CreateCategoryController from "@modules/cars/usecases/create-category/create-category.controller";
 import ImportCategoriesController from "@modules/cars/usecases/import-categories/import-categories.controller";
@@ -10,7 +11,7 @@ const categoriesRoutes = Router();
 const upload = multer({ dest: "./tmp" });
 
 const createCategoryController = new CreateCategoryController();
-categoriesRoutes.post("/", createCategoryController.handle);
+categoriesRoutes.post("/", ensureIsAdmin, createCategoryController.handle);
 
 const listCategoriesController = new ListCategoriesController();
 categoriesRoutes.get("/", listCategoriesController.handle);
@@ -18,6 +19,7 @@ categoriesRoutes.get("/", listCategoriesController.handle);
 const importCategoriesController = new ImportCategoriesController();
 categoriesRoutes.post(
   "/import",
+  ensureIsAdmin,
   upload.single("file"),
   importCategoriesController.handle
 );

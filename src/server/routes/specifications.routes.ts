@@ -1,4 +1,5 @@
 import { Router } from "express";
+import ensureIsAdmin from "server/middlewares/ensure-admin";
 
 import CreateSpecificationController from "@modules/cars/usecases/create-specification/create-specification.controller";
 import ListSpecificationsController from "@modules/cars/usecases/list-specifications/list-specifications.controller";
@@ -6,7 +7,7 @@ import ListSpecificationsController from "@modules/cars/usecases/list-specificat
 const specificationsRoutes = Router();
 
 const createSpecificationController = new CreateSpecificationController();
-specificationsRoutes.post("/", createSpecificationController.handle);
+specificationsRoutes.post("/", ensureIsAdmin, createSpecificationController.handle);
 
 const listSpecificationsController = new ListSpecificationsController();
 specificationsRoutes.get("/", listSpecificationsController.handle);

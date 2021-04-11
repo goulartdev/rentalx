@@ -38,7 +38,7 @@ export async function ensureAutheticated(
     }
 
     // todo: ver possibilidade de colocar o usuário em vez do id
-    request.user = { id: userId };
+    request.user = { id: userId, isAdmin: user.isAdmin };
 
     next();
   } catch {
