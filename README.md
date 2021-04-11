@@ -2,16 +2,18 @@
 **Non-Functional Requeriments (NFR)**
 **Business Rules(BR)**
 
-# Cars register/update
+# Cars register
 **FR**
-[ ] Should be possible to register new cars.
-[ ] Should be possible to list all categories.
+[X] Should be possible to register new cars.
 
 **BR**
-[ ] Should not be possible to register two cars with the same license plate.
-[ ] Should not be possible to change the license plate of an already registered car.
-[ ] A new car should be registered as "available" by default.
+[X] Should not be possible to register two cars with the same license plate.
+[X] A new car should be registered as "available" by default.
 [ ] Should not be possible to a non-admin users to create or edit cars.
+
+# Car update
+**BR**
+[ ] Should not be possible to change the license plate of an already registered car.
 
 # Cars listing
 **FR**

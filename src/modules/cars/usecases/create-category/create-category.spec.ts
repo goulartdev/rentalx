@@ -32,8 +32,8 @@ describe("Create Category", () => {
     );
   });
 
-  it("should not be able to create a new category if name already exists", async () => {
-    expect(async () => {
+  it("should not be able to create a new category if name already exists", () => {
+    return expect(async () => {
       const category = {
         name: "Category 2",
         description: "Category 2 description",
@@ -41,6 +41,6 @@ describe("Create Category", () => {
 
       await createCategory.execute(category);
       await createCategory.execute(category);
-    }).rejects.toThrowError(AppError);
+    }).rejects.toBeInstanceOf(AppError);
   });
 });

@@ -1,9 +1,9 @@
 import { inject, injectable } from "tsyringe";
 
-import AppError from "@shared/errors/app-error";
 import CategoryRepository, {
   CreateCategoryParams,
 } from "@modules/cars/repositories/port/categories.repository";
+import AppError from "@shared/errors/app-error";
 
 @injectable()
 class CreateCategory {

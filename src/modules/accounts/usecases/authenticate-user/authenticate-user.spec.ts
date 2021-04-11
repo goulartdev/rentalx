@@ -37,16 +37,16 @@ describe("Authenticate User", () => {
   });
 
   it("should not be able to authenticate an non existing user", () => {
-    expect(async () => {
+    return expect(async () => {
       await authenticateUser.execute({
         email: "any name",
         password: "any password",
       });
-    }).rejects.toThrowError(AppError);
+    }).rejects.toBeInstanceOf(AppError);
   });
 
-  it("should not be able to authenticate when password is wrong", async () => {
-    expect(async () => {
+  it("should not be able to authenticate when password is wrong", () => {
+    return expect(async () => {
       const user: CreateUserDTO = {
         name: "Foo Bar 2",
         email: "foo.bar.2@test.com",
@@ -60,6 +60,6 @@ describe("Authenticate User", () => {
         email: user.email,
         password: "wrong password",
       });
-    }).rejects.toThrowError(AppError);
+    }).rejects.toBeInstanceOf(AppError);
   });
 });
