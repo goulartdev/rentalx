@@ -1,5 +1,6 @@
 import { getRepository, Repository } from "typeorm";
 
+import AvailableCarsFilter from "@modules/cars/repositories/dto/available-cars-filter";
 import CreateCarData from "@modules/cars/repositories/dto/create-car.data";
 import CarsRepository from "@modules/cars/repositories/port/cars.repository";
 
@@ -12,14 +13,36 @@ class TypeORMCarsRepository implements CarsRepository {
     this.repository = getRepository(Car);
   }
 
-  create(data: CreateCarData): Promise<Car> {
+  async create(data: CreateCarData): Promise<Car> {
     const car = this.repository.create(data);
 
     return this.repository.save(car);
   }
 
-  findByLicensePlate(licensePlate: string): Promise<Car | undefined> {
+  async findByLicensePlate(licensePlate: string): Promise<Car | undefined> {
     return this.repository.findOne({ licensePlate });
+  }
+
+  async listAvailable(filters: AvailableCarsFilter): Promise<Car[]> {
+    const { name, categoryId, brand } = filters;
+
+    const query = this.repository
+      .createQueryBuilder("C")
+      .where("available = :available", { available: true });
+
+    if (name) {
+      query.andWhere("name ILIKE :name", { name: `%${name}%` });
+    }
+
+    if (brand) {
+      query.andWhere("brand ILIKE :brand", { brand: `%${brand}%` });
+    }
+
+    if (categoryId) {
+      query.andWhere("category_id = :categoryId", { categoryId });
+    }
+
+    return query.getMany();
   }
 }
 
