@@ -9,7 +9,7 @@ import AppError from "@shared/errors/app-error";
 @injectable()
 class AddSpecificationsToCar {
   constructor(
-    @inject("CarsRepository") private carsRepositories: CarsRepository,
+    @inject("CarsRepository") private carsRepository: CarsRepository,
     @inject("SpecificationsRepository")
     private specificationsRepository: SpecificationsRepository
   ) {
@@ -19,7 +19,7 @@ class AddSpecificationsToCar {
   async execute(data: AddSpecificationsToCarDTO): Promise<Car> {
     const { carId, specificationsIds } = data;
 
-    const car = await this.carsRepositories.findById(carId);
+    const car = await this.carsRepository.findById(carId);
 
     if (!car) {
       throw new AppError("Car not found");
@@ -31,7 +31,7 @@ class AddSpecificationsToCar {
 
     car.specifications = specifications || [];
 
-    return this.carsRepositories.create(car);
+    return this.carsRepository.create(car);
   }
 }
 

@@ -37,7 +37,6 @@
 # Cars images
 **FR**
 [ ] Should be possible to add images to a car.
-[ ] Should be possible to list all cars.
 
 **NFR**
 [ ] Multer should be used to images upload.

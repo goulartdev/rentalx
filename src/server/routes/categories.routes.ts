@@ -1,10 +1,11 @@
 import { Router } from "express";
 import multer from "multer";
-import ensureIsAdmin from "server/middlewares/ensure-admin";
 
 import CreateCategoryController from "@modules/cars/usecases/create-category/create-category.controller";
 import ImportCategoriesController from "@modules/cars/usecases/import-categories/import-categories.controller";
 import ListCategoriesController from "@modules/cars/usecases/list-categories/list-categories.controller";
+
+import ensureIsAdmin from "../middlewares/ensure-admin";
 
 const categoriesRoutes = Router();
 

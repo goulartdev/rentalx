@@ -6,10 +6,12 @@ import {
   JoinTable,
   ManyToMany,
   ManyToOne,
+  OneToMany,
   PrimaryColumn,
 } from "typeorm";
 import { v4 as uuidV4 } from "uuid";
 
+import CarImage from "./car-image";
 import Category from "./category";
 import Specification from "./specification";
 
@@ -46,13 +48,21 @@ class Car {
   @JoinColumn({ name: "category_id" })
   category: Category;
 
-  @ManyToMany(() => Specification)
+  @ManyToMany(() => Specification, {
+    cascade: true,
+  })
   @JoinTable({
     name: "specifications_cars",
     joinColumns: [{ name: "car_id" }],
     inverseJoinColumns: [{ name: "specification_id" }],
   })
   specifications: Specification[];
+
+  @OneToMany(() => CarImage, (image) => image.carId, {
+    cascade: true,
+    orphanedRowAction: "delete",
+  })
+  images: CarImage[];
 
   @CreateDateColumn()
   createdAt: Date;
@@ -61,6 +71,7 @@ class Car {
     if (!this.id) {
       this.id = uuidV4();
       this.available = true;
+      this.createdAt = new Date();
     }
   }
 }

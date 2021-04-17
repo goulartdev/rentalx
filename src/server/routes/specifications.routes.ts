@@ -1,8 +1,9 @@
 import { Router } from "express";
-import ensureIsAdmin from "server/middlewares/ensure-admin";
 
 import CreateSpecificationController from "@modules/cars/usecases/create-specification/create-specification.controller";
 import ListSpecificationsController from "@modules/cars/usecases/list-specifications/list-specifications.controller";
+
+import ensureIsAdmin from "../middlewares/ensure-admin";
 
 const specificationsRoutes = Router();
 
