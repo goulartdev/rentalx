@@ -23,6 +23,10 @@ class TypeORMCarsRepository implements CarsRepository {
     return this.repository.findOne({ licensePlate });
   }
 
+  async findById(carId: string): Promise<Car | undefined> {
+    return this.repository.findOne({ id: carId });
+  }
+
   async listAvailable(filters: AvailableCarsFilter): Promise<Car[]> {
     const { name, categoryId, brand } = filters;
 

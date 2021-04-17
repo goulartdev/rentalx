@@ -1,4 +1,4 @@
-import Specification from "@modules/cars/entities/specification";
+import Specification from "@modules/cars/externals/typeorm/entities/specification";
 import SpecificationsRepository, {
   CreateSpecificationParams,
 } from "@modules/cars/repositories/port/specifications.repository";
@@ -8,7 +8,7 @@ class InMemorySpecificationRepository implements SpecificationsRepository {
 
   private specifications: Specification[];
 
-  private constructor() {
+  constructor() {
     this.specifications = [];
   }
 
@@ -20,7 +20,7 @@ class InMemorySpecificationRepository implements SpecificationsRepository {
     return InMemorySpecificationRepository.instance;
   }
 
-  async create({ name, description }: CreateSpecificationParams): Promise<void> {
+  async create({ name, description }: CreateSpecificationParams): Promise<Specification> {
     const specification = new Specification();
 
     Object.assign(specification, {
@@ -30,6 +30,8 @@ class InMemorySpecificationRepository implements SpecificationsRepository {
     });
 
     this.specifications.push(specification);
+
+    return specification;
   }
 
   async list(): Promise<Specification[]> {
@@ -38,6 +40,10 @@ class InMemorySpecificationRepository implements SpecificationsRepository {
 
   async findByName(name: string): Promise<Specification | undefined> {
     return this.specifications.find((specification) => specification.name === name);
+  }
+
+  async findByIds(ids: string[]): Promise<Specification[]> {
+    return this.specifications.filter(({ id }) => ids.includes(id));
   }
 }
 

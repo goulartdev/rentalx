@@ -28,8 +28,6 @@
 # Cars Specifications register
 **FR**
 [ ] Should be possible to register a new specification for a car.
-[ ] Should be possible to list all specifications.
-[ ] Should be possible to list all cars.
 
 **BR**
 [ ] Should not be possible to register a specification for a non-existing car. (??)

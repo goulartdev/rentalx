@@ -1,4 +1,4 @@
-import Specification from "@modules/cars/entities/specification";
+import Specification from "@modules/cars/externals/typeorm/entities/specification";
 
 interface CreateSpecificationParams {
   name: string;
@@ -6,9 +6,11 @@ interface CreateSpecificationParams {
 }
 
 interface SpecificationsRepository {
-  create(params: CreateSpecificationParams): Promise<void>;
+  // todo: rename to save
+  create(params: CreateSpecificationParams): Promise<Specification>;
   list(): Promise<Specification[]>;
   findByName(name: string): Promise<Specification | undefined>;
+  findByIds(ids: string[]): Promise<Specification[]>;
 }
 
 export { CreateSpecificationParams };

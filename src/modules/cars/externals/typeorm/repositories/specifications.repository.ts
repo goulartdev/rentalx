@@ -12,13 +12,13 @@ class TypeORMSpecificationRepository implements SpecificationsRepository {
     this.repository = getRepository(Specification);
   }
 
-  async create({ name, description }: CreateSpecificationParams): Promise<void> {
+  async create({ name, description }: CreateSpecificationParams): Promise<Specification> {
     const specification = this.repository.create({
       name,
       description,
     });
 
-    this.repository.save(specification);
+    return this.repository.save(specification);
   }
 
   async list(): Promise<Specification[]> {
@@ -27,6 +27,10 @@ class TypeORMSpecificationRepository implements SpecificationsRepository {
 
   async findByName(name: string): Promise<Specification | undefined> {
     return this.repository.findOne({ name });
+  }
+
+  async findByIds(ids: string[]): Promise<Specification[]> {
+    return this.repository.findByIds(ids);
   }
 }
 

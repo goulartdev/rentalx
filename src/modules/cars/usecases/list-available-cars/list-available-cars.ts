@@ -1,7 +1,8 @@
+import { inject, injectable } from "tsyringe";
+
 import Car from "@modules/cars/externals/typeorm/entities/car";
 import AvailableCarsFilter from "@modules/cars/repositories/dto/available-cars-filter";
 import CarsRepository from "@modules/cars/repositories/port/cars.repository";
-import { inject, injectable } from "tsyringe";
 
 @injectable()
 class ListAvailableCars {
