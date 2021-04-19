@@ -9,6 +9,7 @@ import createConnection from "@externals/typeorm";
 import errorHandler from "./middlewares/error-handler";
 import router from "./routes";
 import "@shared/container";
+import "@shared/providers";
 
 createConnection();
 

@@ -20,11 +20,7 @@ const listAvailableCars = new ListAvailableCarsController();
 carsRoutes.get("/available", listAvailableCars.handle);
 
 const addSpecificationsToCarController = new AddSpecificationsToCarController();
-carsRoutes.post(
-  "/:id/specifications",
-  ensureIsAdmin,
-  addSpecificationsToCarController.handle
-);
+carsRoutes.post("/:id/specifications", ensureIsAdmin, addSpecificationsToCarController.handle);
 
 const addImagesToCarController = new AddImagesToCarController();
 carsRoutes.post(

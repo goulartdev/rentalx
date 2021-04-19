@@ -8,17 +8,17 @@ import TypeORMSpecificationRepository from "@modules/cars/externals/typeorm/repo
 import CarsRepository from "@modules/cars/repositories/port/cars.repository";
 import CategoriesRepository from "@modules/cars/repositories/port/categories.repository";
 import SpecificationsRepository from "@modules/cars/repositories/port/specifications.repository";
+import TypeORMRentalsRepository from "@modules/rentals/externals/typeorm/repositories/rentals.repository";
+import RentalsRepository from "@modules/rentals/repositories/ports/rentals.repository";
 
 container.registerSingleton<CategoriesRepository>(
   "CategoriesRepository",
   TypeORMCategoryRepository
 );
-
 container.registerSingleton<SpecificationsRepository>(
   "SpecificationsRepository",
   TypeORMSpecificationRepository
 );
-
 container.registerSingleton<UsersRepository>("UsersRepository", TypeORMUsersRepository);
-
 container.registerSingleton<CarsRepository>("CarsRepository", TypeORMCarsRepository);
+container.registerSingleton<RentalsRepository>("RentalsRepository", TypeORMRentalsRepository);
