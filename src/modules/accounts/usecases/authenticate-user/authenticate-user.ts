@@ -2,8 +2,8 @@ import { compare } from "bcrypt";
 import { sign } from "jsonwebtoken";
 import { inject, injectable } from "tsyringe";
 
-import AppError from "@shared/errors/app-error";
 import UsersRepository from "@modules/accounts/repositories/port/users.repository";
+import AppError from "@shared/errors/app-error";
 
 interface AuthParams {
   email: string;

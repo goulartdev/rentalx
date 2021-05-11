@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { ensureAutheticated } from "server/middlewares/ensure-authenticated";
 
 import CreateRentalController from "@modules/rentals/usecases/create-rental/create-rental.controller";
+import { ensureAutheticated } from "@server/middlewares/ensure-authenticated";
 
 const rentalsRoutes = Router();
 

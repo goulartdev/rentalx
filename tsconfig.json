@@ -11,6 +11,7 @@
       "@config/*": ["config/*"],
       "@shared/*": ["shared/*"],
       "@utils/*": ["utils/*"],
+      "@server/*": ["server/*"],
       "@externals/*": ["externals/*"]
     },
     "esModuleInterop": true,

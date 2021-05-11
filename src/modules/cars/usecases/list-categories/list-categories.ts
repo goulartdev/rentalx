@@ -1,13 +1,11 @@
 import { inject, injectable } from "tsyringe";
 
-import Category from "@modules/cars/entities/category";
+import Category from "@modules/cars/externals/typeorm/entities/category";
 import CategoriesRepository from "@modules/cars/repositories/port/categories.repository";
 
 @injectable()
 class ListCategories {
-  constructor(
-    @inject("CategoriesRepository") private categoriesRepository: CategoriesRepository
-  ) {
+  constructor(@inject("CategoriesRepository") private categoriesRepository: CategoriesRepository) {
     //
   }
 
