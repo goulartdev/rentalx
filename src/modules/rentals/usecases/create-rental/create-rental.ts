@@ -48,12 +48,6 @@ class CreateRental {
       throw new AppError("User already have a rental for the given period");
     }
 
-    const diffPickupDropoffHours = this.dateProvider.diffInHours(expectedDropOffDate, pickUpDate);
-
-    if (diffPickupDropoffHours < CreateRental.MIN_RENTAL_HOURS) {
-      throw new AppError(`Can't rent a car for less than ${CreateRental.MIN_RENTAL_HOURS} hours`);
-    }
-
     const rental = new Rental();
 
     Object.assign(rental, {
@@ -74,6 +68,12 @@ class CreateRental {
 
     if (this.dateProvider.isBefore(expectedDropOffDate, pickUpDate)) {
       throw new AppError("Drop-off date must be greater than pick-up date");
+    }
+
+    const diffPickupDropoffHours = this.dateProvider.diffInHours(expectedDropOffDate, pickUpDate);
+
+    if (diffPickupDropoffHours < CreateRental.MIN_RENTAL_HOURS) {
+      throw new AppError(`Can't rent a car for less than ${CreateRental.MIN_RENTAL_HOURS} hours`);
     }
   }
 }

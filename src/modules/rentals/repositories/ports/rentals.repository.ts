@@ -10,6 +10,7 @@ interface RentalsRepository {
   findById(id: string): Promise<Rental | undefined>;
   findByCarInPeriod(carId: string, period: PeriodRange): Promise<Rental | undefined>;
   findByUserIdInPeriod(userId: string, period: PeriodRange): Promise<Rental | undefined>;
+  listByUser(userId: string): Promise<Rental[]>;
 }
 
 export { PeriodRange };

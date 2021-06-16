@@ -36,6 +36,10 @@ class InMemoryRentalsRepository implements RentalsRepository {
         );
       });
   }
+
+  async listByUser(userId: string): Promise<Rental[]> {
+    return this.rentals.filter((rental) => rental.userId === userId);
+  }
 }
 
 export default InMemoryRentalsRepository;

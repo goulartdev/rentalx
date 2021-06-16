@@ -38,6 +38,9 @@ class Rental {
   @Column()
   contractedFineAmount: number;
 
+  @Column()
+  total: number;
+
   @CreateDateColumn()
   createdAt: Date;
 
@@ -48,6 +51,7 @@ class Rental {
     this.id = uuidV4();
     this.createdAt = new Date();
     this.updatedAt = new Date();
+    this.total = 0;
   }
 }
 

@@ -41,6 +41,10 @@ export class CreateRentals1618697161291 implements MigrationInterface {
             type: "numeric",
           },
           {
+            name: "total",
+            type: "numeric",
+          },
+          {
             name: "created_at",
             type: "timestamp",
             default: "now()",

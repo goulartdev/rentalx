@@ -36,6 +36,13 @@ class TypeORMRentalsRepository implements RentalsRepository {
       expectedDropOffDate: MoreThan(period.startDate),
     });
   }
+
+  async listByUser(userId: string): Promise<Rental[]> {
+    return this.repository.find({
+      where: { userId },
+      relations: ["car"],
+    });
+  }
 }
 
 export default TypeORMRentalsRepository;

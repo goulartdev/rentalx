@@ -7,12 +7,49 @@ info:
   contact:
     email: some@email.com.br
 paths:
+  "/authenticate":
+    post:
+      tags:
+      - Authentication
+      summary: User authentication
+      description: Authenticate user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: 
+                email: 
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token: 
+                    type: string
+                  user:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      email: 
+                        type: string
+        '400':
+          description: E-mail or password incorrect
   "/categories":
     post:
       tags:
       - Category
       summary: Create category
       description: Creates a new category
+      security: 
+      - bearerAuth: []
       requestBody:
         content:
           application/json:
@@ -46,6 +83,8 @@ paths:
       - Category
       summary: Import categories
       description: Import categories from a CSV
+      security: 
+      - bearerAuth: []
       requestBody:
         content:
           multipart/form-data:
@@ -64,6 +103,8 @@ paths:
       - Specification
       summary: Creates specification
       description: Creates a new specification
+      security: 
+      - bearerAuth: []
       requestBody:
         content:
           application/json:
@@ -91,6 +132,54 @@ paths:
                 type: array
                 items:
                   "$ref": "#/definitions/Specification"
+  "/cars":
+    post:
+      tags:
+      - Car
+      summary: Create car
+      description: Create a new car
+      security: 
+      - bearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/definitions/Car"
+      responses:
+        '201':
+          description: Created
+        '400':
+          description: A car with this license plate already exists.
+  "/cars/images/{id}":
+    post:
+      tags:
+      - Car
+      summary: Upload car images
+      description: Upload images of a car 
+      security: 
+      - bearerAuth: []
+      parameters:
+      - name: id
+        in: path
+        description: Car id
+        required: true
+        schrma:
+          type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                images:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+      responses:
+        '201':
+          description: Created
+
 definitions:
   Category:
     type: object
@@ -106,3 +195,27 @@ definitions:
         type: string
       description:
         type: string
+  Car:
+   type: object
+   properties:
+      name:
+        type: string
+      description:
+        type: string
+      dailyRate:
+        type: number
+      licensePlate:
+        type: string
+      fineAmount:
+        type: number
+      brand:
+        type: string
+      categoryId:
+        type: string
+    
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

@@ -58,11 +58,11 @@ describe("Add specifications to car", () => {
   });
 
   it("should not be able to add specifications to a non existing car", async () => {
-    await expect(async () => {
-      const carId = "non_existing_id";
-      const specificationsIds = specifications.map(({ id }) => id);
+    const carId = "non_existing_id";
+    const specificationsIds = specifications.map(({ id }) => id);
 
-      await addSpecificationsToCar.execute({ carId, specificationsIds });
-    }).rejects.toBeInstanceOf(AppError);
+    await expect(
+      addSpecificationsToCar.execute({ carId, specificationsIds })
+    ).rejects.toBeInstanceOf(AppError);
   });
 });

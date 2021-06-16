@@ -114,185 +114,170 @@ describe("Create Rental", () => {
   });
 
   it("should not be able to create a rental on past dates", async () => {
-    await expect(async () => {
-      const rentalData = {
-        carId: cars[0].id,
-        userId: "some-user-id-1",
-        pickUpDate: dateProvider.addHours(new Date(), -20),
-        expectedDropOffDate: dateProvider.addHours(new Date(), 60),
-      };
+    const rentalData = {
+      carId: cars[0].id,
+      userId: "some-user-id-1",
+      pickUpDate: dateProvider.addHours(new Date(), -20),
+      expectedDropOffDate: dateProvider.addHours(new Date(), 60),
+    };
 
-      await createRental.execute(rentalData);
-    }).rejects.toBeInstanceOf(AppError);
+    await expect(createRental.execute(rentalData)).rejects.toBeInstanceOf(AppError);
   });
 
   it("should not be able to create a rental with expected drop-off date before pickup-date", async () => {
-    await expect(async () => {
-      const rentalData = {
-        carId: cars[0].id,
-        userId: "some-user-id-1",
-        pickUpDate: dateProvider.addHours(new Date(), 50),
-        expectedDropOffDate: dateProvider.addHours(new Date(), 10),
-      };
+    const rentalData = {
+      carId: cars[0].id,
+      userId: "some-user-id-1",
+      pickUpDate: dateProvider.addHours(new Date(), 50),
+      expectedDropOffDate: dateProvider.addHours(new Date(), 10),
+    };
 
-      await createRental.execute(rentalData);
-    }).rejects.toBeInstanceOf(AppError);
+    await expect(createRental.execute(rentalData)).rejects.toBeInstanceOf(AppError);
   });
 
   it("should not be able to rent a car for a non-existing car", async () => {
-    await expect(async () => {
-      const rentalData = {
-        carId: "some-non-sxisting-id",
-        userId: "some-user-id-1",
-        pickUpDate: dateProvider.addHours(new Date(), 20),
-        expectedDropOffDate: dateProvider.addHours(new Date(), 60),
-      };
+    const rentalData = {
+      carId: "some-non-sxisting-id",
+      userId: "some-user-id-1",
+      pickUpDate: dateProvider.addHours(new Date(), 20),
+      expectedDropOffDate: dateProvider.addHours(new Date(), 60),
+    };
 
-      await createRental.execute(rentalData);
-    }).rejects.toBeInstanceOf(AppError);
+    await expect(createRental.execute(rentalData)).rejects.toBeInstanceOf(AppError);
   });
 
   it("should not be able to rent a car for less than 24 hours", async () => {
     const pickupDate = dateProvider.addHours(new Date(), 24);
 
-    await expect(async () => {
-      const rentalData = {
-        carId: cars[0].id,
-        userId: "some-user-id-1",
-        pickUpDate: pickupDate,
-        expectedDropOffDate: dateProvider.addHours(pickupDate, 23),
-      };
+    const rentalData = {
+      carId: cars[0].id,
+      userId: "some-user-id-1",
+      pickUpDate: pickupDate,
+      expectedDropOffDate: dateProvider.addHours(pickupDate, 23),
+    };
 
-      await createRental.execute(rentalData);
-    }).rejects.toBeInstanceOf(AppError);
+    await expect(createRental.execute(rentalData)).rejects.toBeInstanceOf(AppError);
   });
 
   it("should not be able to rent a car if its already reserved for the given period, test 1", async () => {
     /*
-      test case:
-      rental 1 period:    d1            d2
-      rental 2 period:          d1            d2
-    */
+    test case:
+    rental 1 period:    d1            d2
+    rental 2 period:          d1            d2
+  */
 
-    await expect(async () => {
-      const rentalData1 = {
-        carId: cars[0].id,
-        userId: "some-user-id-1",
-        pickUpDate: dateProvider.addHours(new Date(), 12),
-        expectedDropOffDate: dateProvider.addHours(new Date(), 72),
-      };
+    const rentalData1 = {
+      carId: cars[0].id,
+      userId: "some-user-id-1",
+      pickUpDate: dateProvider.addHours(new Date(), 24),
+      expectedDropOffDate: dateProvider.addHours(new Date(), 72),
+    };
 
-      const rentalData2 = {
-        carId: cars[0].id,
-        userId: "some-user-id-2",
-        pickUpDate: dateProvider.addHours(new Date(), 24),
-        expectedDropOffDate: dateProvider.addHours(new Date(), 90),
-      };
+    const rentalData2 = {
+      carId: cars[0].id,
+      userId: "some-user-id-2",
+      pickUpDate: dateProvider.addHours(new Date(), 36),
+      expectedDropOffDate: dateProvider.addHours(new Date(), 90),
+    };
 
-      await createRental.execute(rentalData1);
-      await createRental.execute(rentalData2);
-    }).rejects.toBeInstanceOf(AppError);
+    await createRental.execute(rentalData1);
+
+    await expect(createRental.execute(rentalData2)).rejects.toBeInstanceOf(AppError);
   });
 
-  it("should not be able to rent a car if its already reserved for the given period, test 1", async () => {
+  it("should not be able to rent a car if its already reserved for the given period, test 2", async () => {
     /*
-      test case:
-      rental 1 period:       d1            d2
-      rental 2 period:   d1            d2
-    */
+    test case:
+    rental 1 period:       d1            d2
+    rental 2 period:   d1            d2
+  */
 
-    await expect(async () => {
-      const rentalData1 = {
-        carId: cars[0].id,
-        userId: "some-user-id-1",
-        pickUpDate: new Date(24),
-        expectedDropOffDate: dateProvider.addHours(new Date(), 72),
-      };
+    const rentalData1 = {
+      carId: cars[0].id,
+      userId: "some-user-id-1",
+      pickUpDate: dateProvider.addHours(new Date(), 36),
+      expectedDropOffDate: dateProvider.addHours(new Date(), 72),
+    };
 
-      const rentalData2 = {
-        carId: cars[0].id,
-        userId: "some-user-id-2",
-        pickUpDate: dateProvider.addHours(new Date(), 12),
-        expectedDropOffDate: dateProvider.addHours(new Date(), 36),
-      };
+    const rentalData2 = {
+      carId: cars[0].id,
+      userId: "some-user-id-2",
+      pickUpDate: dateProvider.addHours(new Date(), 24),
+      expectedDropOffDate: dateProvider.addHours(new Date(), 48),
+    };
 
-      await createRental.execute(rentalData1);
-      await createRental.execute(rentalData2);
-    }).rejects.toBeInstanceOf(AppError);
+    await createRental.execute(rentalData1);
+
+    await expect(createRental.execute(rentalData2)).rejects.toBeInstanceOf(AppError);
   });
 
-  it("should not be able to rent a car if its already reserved for the given period, test 1", async () => {
+  it("should not be able to rent a car if its already reserved for the given period, test 3", async () => {
     /*
-      test case:
-      rental 1 period:       d1         d2
-      rental 2 period:   d1                  d2
-    */
+    test case:
+    rental 1 period:       d1         d2
+    rental 2 period:   d1                  d2
+  */
+    const rentalData1 = {
+      carId: cars[0].id,
+      userId: "some-user-id-1",
+      pickUpDate: dateProvider.addHours(new Date(), 36),
+      expectedDropOffDate: dateProvider.addHours(new Date(), 72),
+    };
 
-    await expect(async () => {
-      const rentalData1 = {
-        carId: cars[0].id,
-        userId: "some-user-id-1",
-        pickUpDate: dateProvider.addHours(new Date(), 36),
-        expectedDropOffDate: dateProvider.addHours(new Date(), 72),
-      };
+    const rentalData2 = {
+      carId: cars[0].id,
+      userId: "some-user-id-2",
+      pickUpDate: dateProvider.addHours(new Date(), 24),
+      expectedDropOffDate: dateProvider.addHours(new Date(), 90),
+    };
 
-      const rentalData2 = {
-        carId: cars[0].id,
-        userId: "some-user-id-2",
-        pickUpDate: dateProvider.addHours(new Date(), 12),
-        expectedDropOffDate: dateProvider.addHours(new Date(), 90),
-      };
-
-      await createRental.execute(rentalData1);
-      await createRental.execute(rentalData2);
-    }).rejects.toBeInstanceOf(AppError);
+    await createRental.execute(rentalData1);
+    await expect(createRental.execute(rentalData2)).rejects.toBeInstanceOf(AppError);
   });
 
-  it("should not be able to rent a car if its already reserved for the given period, test 1", async () => {
+  it("should not be able to rent a car if its already reserved for the given period, test 4", async () => {
     /*
-      test case:
-      rental 1 period:   d1                  d2
-      rental 2 period:        d1        d2
-    */
+    test case:
+    rental 1 period:   d1                  d2
+    rental 2 period:        d1        d2
+  */
 
-    await expect(async () => {
-      const rentalData1 = {
-        carId: cars[0].id,
-        userId: "some-user-id-1",
-        pickUpDate: dateProvider.addHours(new Date(), 12),
-        expectedDropOffDate: dateProvider.addHours(new Date(), 90),
-      };
+    const rentalData1 = {
+      carId: cars[0].id,
+      userId: "some-user-id-1",
+      pickUpDate: dateProvider.addHours(new Date(), 24),
+      expectedDropOffDate: dateProvider.addHours(new Date(), 90),
+    };
 
-      const rentalData2 = {
-        carId: cars[0].id,
-        userId: "some-user-id-2",
-        pickUpDate: dateProvider.addHours(new Date(), 24),
-        expectedDropOffDate: dateProvider.addHours(new Date(), 70),
-      };
+    const rentalData2 = {
+      carId: cars[0].id,
+      userId: "some-user-id-2",
+      pickUpDate: dateProvider.addHours(new Date(), 36),
+      expectedDropOffDate: dateProvider.addHours(new Date(), 70),
+    };
 
-      await createRental.execute(rentalData1);
-      await createRental.execute(rentalData2);
-    }).rejects.toBeInstanceOf(AppError);
+    await createRental.execute(rentalData1);
+
+    await expect(createRental.execute(rentalData2)).rejects.toBeInstanceOf(AppError);
   });
 
   it("should not be able to rent a car if the user already have a reservation for the given period", async () => {
-    await expect(async () => {
-      const rentalData1 = {
-        carId: cars[0].id,
-        userId: "some-user-id-1",
-        pickUpDate: dateProvider.addHours(new Date(), 12),
-        expectedDropOffDate: dateProvider.addHours(new Date(), 40),
-      };
+    const rentalData1 = {
+      carId: cars[0].id,
+      userId: "some-user-id-1",
+      pickUpDate: dateProvider.addHours(new Date(), 12),
+      expectedDropOffDate: dateProvider.addHours(new Date(), 40),
+    };
 
-      const rentalData2 = {
-        carId: cars[1].id,
-        userId: "some-user-id-1",
-        pickUpDate: dateProvider.addHours(new Date(), 24),
-        expectedDropOffDate: dateProvider.addHours(new Date(), 70),
-      };
+    const rentalData2 = {
+      carId: cars[1].id,
+      userId: "some-user-id-1",
+      pickUpDate: dateProvider.addHours(new Date(), 24),
+      expectedDropOffDate: dateProvider.addHours(new Date(), 70),
+    };
 
-      await createRental.execute(rentalData1);
-      await createRental.execute(rentalData2);
-    }).rejects.toBeInstanceOf(AppError);
+    await createRental.execute(rentalData1);
+
+    await expect(createRental.execute(rentalData2)).rejects.toBeInstanceOf(AppError);
   });
 });
