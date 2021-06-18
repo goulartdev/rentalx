@@ -9,9 +9,9 @@ class AuthenticateUserController {
 
     const authenticateUser = container.resolve(AuthenticateUser);
 
-    const { token, user } = await authenticateUser.execute({ password, email });
+    const authPayload = await authenticateUser.execute({ password, email });
 
-    return response.json({ token, user });
+    return response.json(authPayload);
   }
 }
 

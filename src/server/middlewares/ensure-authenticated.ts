@@ -1,6 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import { verify } from "jsonwebtoken";
 
+import auth from "@config/auth";
+import TypeORMUsersTokensRepository from "@modules/accounts/externals/typeorm/repositories/users-tokens.repository";
 import TypeORMUsersRepository from "@modules/accounts/externals/typeorm/repositories/users.repository";
 import AppError from "@shared/errors/app-error";
 
@@ -23,15 +25,19 @@ export async function ensureAutheticated(
 
   try {
     // todo: botar esse hash numa variável de ambiente
-    const { sub: userId } = verify(
-      token,
-      "fefc042e77962980b1673089a4a8db31"
-    ) as AuthPayload;
+    const { sub: userId } = verify(token, auth.refreshToken.secretHash) as AuthPayload;
 
     // todo: encontrar outra forma de pegar esse repositório
-    const usersRepository = new TypeORMUsersRepository();
+    const usersTokenRepository = new TypeORMUsersTokensRepository();
+    const userToken = await usersTokenRepository.findByUserIdAndToken(userId, token);
 
-    const user = await usersRepository.findById(userId);
+    if (!userToken) {
+      throw new AppError("Invalid token", 400);
+    }
+
+    // todo: encontrar outra forma de pegar esse repositório, ou traser o usuário junto com a query do userToken
+    const userRepository = new TypeORMUsersRepository();
+    const user = await userRepository.findById(userToken.id);
 
     if (!user) {
       throw new AppError("User not found", 401);

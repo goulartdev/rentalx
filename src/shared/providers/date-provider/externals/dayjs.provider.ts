@@ -15,6 +15,10 @@ class DayJSDateProvider implements DateProvider {
     return dayjs(date).add(hours, "hours").toDate();
   }
 
+  addSeconds(date: Date, seconds: number): Date {
+    return dayjs(date).add(seconds, "seconds").toDate();
+  }
+
   isBefore(date1: Date, date2: Date): boolean {
     return dayjs(date1).isBefore(date2);
   }
