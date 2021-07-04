@@ -7,9 +7,7 @@ import AppError from "@shared/errors/app-error";
 
 @injectable()
 class CreateCategory {
-  constructor(
-    @inject("CategoriesRepository") private categoriesRepository: CategoryRepository
-  ) {
+  constructor(@inject("CategoriesRepository") private categoriesRepository: CategoryRepository) {
     //
   }
 
@@ -17,7 +15,7 @@ class CreateCategory {
     const existingCategory = await this.categoriesRepository.findByName(name);
 
     if (existingCategory) {
-      throw new AppError(`A category whit the name ${name} already exists`, 400);
+      throw new AppError(`A category with the name ${name} already exists`, 400);
     }
 
     await this.categoriesRepository.create({ name, description });

@@ -2,7 +2,7 @@ import { container } from "tsyringe";
 
 import TypeORMUsersTokensRepository from "@modules/accounts/externals/typeorm/repositories/users-tokens.repository";
 import TypeORMUsersRepository from "@modules/accounts/externals/typeorm/repositories/users.repository";
-import { UsersTokensRepository } from "@modules/accounts/repositories/port/users-token.repository";
+import UsersTokensRepository from "@modules/accounts/repositories/port/users-token.repository";
 import UsersRepository from "@modules/accounts/repositories/port/users.repository";
 import TypeORMCarsRepository from "@modules/cars/externals/typeorm/repositories/cars.repository";
 import TypeORMCategoryRepository from "@modules/cars/externals/typeorm/repositories/categories.repository";

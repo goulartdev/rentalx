@@ -20,34 +20,27 @@ export async function ensureAutheticated(
   if (!authHeader) {
     throw new AppError("Token missing", 401);
   }
-
   const [, token] = authHeader.split(" ");
 
+  let userId = "";
+
   try {
-    // todo: botar esse hash numa variável de ambiente
-    const { sub: userId } = verify(token, auth.refreshToken.secretHash) as AuthPayload;
-
-    // todo: encontrar outra forma de pegar esse repositório
-    const usersTokenRepository = new TypeORMUsersTokensRepository();
-    const userToken = await usersTokenRepository.findByUserIdAndToken(userId, token);
-
-    if (!userToken) {
-      throw new AppError("Invalid token", 400);
-    }
-
-    // todo: encontrar outra forma de pegar esse repositório, ou traser o usuário junto com a query do userToken
-    const userRepository = new TypeORMUsersRepository();
-    const user = await userRepository.findById(userToken.id);
-
-    if (!user) {
-      throw new AppError("User not found", 401);
-    }
-
-    // todo: ver possibilidade de colocar o usuário em vez do id
-    request.user = { id: userId, isAdmin: user.isAdmin };
-
-    next();
-  } catch {
-    throw new AppError("Invalid token", 401);
+    const { sub } = verify(token, auth.token.secretHash) as AuthPayload;
+    userId = sub;
+  } catch (err) {
+    throw new AppError("Invalid token", 400);
   }
+
+  // todo: encontrar outra forma de pegar esse repositório, ou trazer o usuário junto com a query do userTken
+  const userRepository = new TypeORMUsersRepository();
+  const user = await userRepository.findById(userId);
+
+  if (!user) {
+    throw new AppError("User not found", 401);
+  }
+
+  // todo: ver possibilidade de colocar o usuário em vez do id
+  request.user = { id: userId, isAdmin: user.isAdmin };
+
+  next();
 }

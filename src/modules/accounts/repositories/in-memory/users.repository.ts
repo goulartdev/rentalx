@@ -1,7 +1,5 @@
 import User from "@modules/accounts/externals/typeorm/entities/user";
-import UsersRepository, {
-  CreateUserDTO,
-} from "@modules/accounts/repositories/port/users.repository";
+import UsersRepository from "@modules/accounts/repositories/port/users.repository";
 
 class InMemoryUsersRepository implements UsersRepository {
   private static instance: UsersRepository;
@@ -20,12 +18,10 @@ class InMemoryUsersRepository implements UsersRepository {
     return InMemoryUsersRepository.instance;
   }
 
-  async create(params: CreateUserDTO): Promise<void> {
-    const user = new User();
-
-    Object.assign(user, params);
-
+  async save(user: User): Promise<User> {
     this.users.push(user);
+
+    return user;
   }
 
   async findByEmail(email: string): Promise<User | undefined> {

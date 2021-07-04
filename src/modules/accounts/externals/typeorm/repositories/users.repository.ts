@@ -1,8 +1,6 @@
 import { getRepository, Repository } from "typeorm";
 
-import UsersRepository, {
-  CreateUserDTO,
-} from "@modules/accounts/repositories/port/users.repository";
+import UsersRepository from "@modules/accounts/repositories/port/users.repository";
 
 import User from "../entities/user";
 
@@ -13,10 +11,8 @@ class TypeORMUsersRepository implements UsersRepository {
     this.repository = getRepository(User);
   }
 
-  async create(params: CreateUserDTO): Promise<void> {
-    const user = this.repository.create(params);
-
-    await this.repository.save(user);
+  async save(user: User): Promise<User> {
+    return this.repository.save(user);
   }
 
   async findByEmail(email: string): Promise<User | undefined> {

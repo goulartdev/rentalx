@@ -1,7 +1,7 @@
 import { getRepository, Repository } from "typeorm";
 
 import UserToken from "@modules/accounts/externals/typeorm/entities/user_token";
-import { UsersTokensRepository } from "@modules/accounts/repositories/port/users-token.repository";
+import UsersTokensRepository from "@modules/accounts/repositories/port/users-token.repository";
 
 class TypeORMUsersTokensRepository implements UsersTokensRepository {
   private repository: Repository<UserToken>;
@@ -16,6 +16,10 @@ class TypeORMUsersTokensRepository implements UsersTokensRepository {
 
   async findByUserIdAndToken(userId: string, token: string): Promise<UserToken | undefined> {
     return this.repository.findOne({ userId, refreshToken: token });
+  }
+
+  async findByToken(token: string): Promise<UserToken | undefined> {
+    return this.repository.findOne({ refreshToken: token });
   }
 
   async deleteById(userTokenId: string): Promise<void> {

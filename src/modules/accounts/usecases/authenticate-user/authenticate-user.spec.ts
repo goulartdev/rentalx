@@ -1,25 +1,31 @@
+import InMemoryUsersTokensRepository from "@modules/accounts/repositories/in-memory/users-tokens.repository";
 import InMemoryUsersRepository from "@modules/accounts/repositories/in-memory/users.repository";
-import UsersRepository, {
-  CreateUserDTO,
-} from "@modules/accounts/repositories/port/users.repository";
-import CreateUser from "@modules/accounts/usecases/create-user/create-user";
+import UsersTokensRepository from "@modules/accounts/repositories/port/users-token.repository";
+import UsersRepository from "@modules/accounts/repositories/port/users.repository";
 import AppError from "@shared/errors/app-error";
+import getDateProvider from "@shared/providers/date-provider";
+import DateProvider from "@shared/providers/date-provider/port/DateProvider";
 
+import CreateUser from "../create-user/create-user";
 import AuthenticateUser from "./authenticate-user";
 
 let usersRepository: UsersRepository;
+let usersTokensRepository: UsersTokensRepository;
 let authenticateUser: AuthenticateUser;
 let createUser: CreateUser;
+let dateProvider: DateProvider;
 
 describe("Authenticate User", () => {
   beforeAll(() => {
     usersRepository = InMemoryUsersRepository.getInstance();
-    authenticateUser = new AuthenticateUser(usersRepository);
+    usersTokensRepository = InMemoryUsersTokensRepository.getInstance();
+    dateProvider = getDateProvider();
+    authenticateUser = new AuthenticateUser(usersRepository, usersTokensRepository, dateProvider);
     createUser = new CreateUser(usersRepository);
   });
 
   it("should be able to authenticate an user", async () => {
-    const user: CreateUserDTO = {
+    const user = {
       name: "Foo Bar 1",
       email: "foo.bar.1@test.com",
       driverLicense: "123456",
@@ -46,7 +52,7 @@ describe("Authenticate User", () => {
   });
 
   it("should not be able to authenticate when password is wrong", async () => {
-    const user: CreateUserDTO = {
+    const user = {
       name: "Foo Bar 2",
       email: "foo.bar.2@test.com",
       driverLicense: "654321",

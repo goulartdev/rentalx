@@ -4,7 +4,7 @@ import { inject, injectable } from "tsyringe";
 
 import auth from "@config/auth";
 import UserToken from "@modules/accounts/externals/typeorm/entities/user_token";
-import { UsersTokensRepository } from "@modules/accounts/repositories/port/users-token.repository";
+import UsersTokensRepository from "@modules/accounts/repositories/port/users-token.repository";
 import UsersRepository from "@modules/accounts/repositories/port/users.repository";
 import AppError from "@shared/errors/app-error";
 import DateProvider from "@shared/providers/date-provider/port/DateProvider";

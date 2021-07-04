@@ -29,7 +29,7 @@ class UpdateUserAvatar {
 
     user.avatar = avatarFile;
 
-    await this.usersRepository.create(user);
+    await this.usersRepository.save(user);
   }
 }
 

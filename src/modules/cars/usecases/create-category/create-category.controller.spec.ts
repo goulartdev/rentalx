@@ -31,12 +31,12 @@ describe("Create Category Controller", () => {
   });
 
   it("should be able to create a new category", async () => {
-    const responseToken = await request(app).post("/authenticate").send({
+    const authResponse = await request(app).post("/authenticate").send({
       email,
       password,
     });
 
-    const { token } = responseToken.body;
+    const { refreshToken } = authResponse.body;
 
     const response = await request(app)
       .post("/categories")
@@ -45,7 +45,7 @@ describe("Create Category Controller", () => {
         description: "category test 1 description",
       })
       .set({
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${refreshToken}`,
       });
 
     expect(response.status).toBe(201);
@@ -57,7 +57,7 @@ describe("Create Category Controller", () => {
       password,
     });
 
-    const { token } = responseToken.body;
+    const { refreshToken } = responseToken.body;
 
     const response = await request(app)
       .post("/categories")
@@ -66,7 +66,7 @@ describe("Create Category Controller", () => {
         description: "category test 1 description",
       })
       .set({
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${refreshToken}`,
       });
 
     expect(response.status).toBe(400);

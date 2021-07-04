@@ -3,13 +3,18 @@ import { inject, injectable } from "tsyringe";
 
 import auth from "@config/auth";
 import UserToken from "@modules/accounts/externals/typeorm/entities/user_token";
-import { UsersTokensRepository } from "@modules/accounts/repositories/port/users-token.repository";
+import UsersTokensRepository from "@modules/accounts/repositories/port/users-token.repository";
 import AppError from "@shared/errors/app-error";
 import DateProvider from "@shared/providers/date-provider/port/DateProvider";
 
 interface Payload {
   sub: string;
   email: string;
+}
+
+interface TokenResponse {
+  token: string;
+  refreshToken: string;
 }
 
 @injectable()
@@ -21,7 +26,7 @@ class RefreshToken {
     //
   }
 
-  async execute(token: string): Promise<string> {
+  async execute(token: string): Promise<TokenResponse> {
     const { email, sub: userId } = verify(token, auth.refreshToken.secretHash) as Payload;
 
     const userToken = await this.usersTokensRepository.findByUserIdAndToken(userId, token);
@@ -50,9 +55,14 @@ class RefreshToken {
       expiresDate,
     });
 
+    const newToken = sign({}, auth.token.secretHash, {
+      subject: userId,
+      expiresIn: auth.token.expiresIn,
+    });
+
     await this.usersTokensRepository.create(userToken);
 
-    return refreshToken;
+    return { token: newToken, refreshToken };
   }
 }
 

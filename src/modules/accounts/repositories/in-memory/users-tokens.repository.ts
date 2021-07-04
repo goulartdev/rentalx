@@ -1,6 +1,6 @@
 import UserToken from "@modules/accounts/externals/typeorm/entities/user_token";
 
-import { UsersTokensRepository } from "../port/users-token.repository";
+import UsersTokensRepository from "../port/users-token.repository";
 
 class InMemoryUsersTokensRepository implements UsersTokensRepository {
   private static instance: UsersTokensRepository;
@@ -29,6 +29,10 @@ class InMemoryUsersTokensRepository implements UsersTokensRepository {
     return this.usersTokens.find(
       (userToken) => userToken.userId === userId && userToken.refreshToken === token
     );
+  }
+
+  async findByToken(token: string): Promise<UserToken | undefined> {
+    return this.usersTokens.find((userToken) => userToken.refreshToken === token);
   }
 
   async deleteById(userTokenId: string): Promise<void> {

@@ -1,10 +1,18 @@
 import { hash } from "bcrypt";
 import { inject, injectable } from "tsyringe";
 
-import UsersRepository, {
-  CreateUserDTO,
-} from "@modules/accounts/repositories/port/users.repository";
+import User from "@modules/accounts/externals/typeorm/entities/user";
+import UsersRepository from "@modules/accounts/repositories/port/users.repository";
 import AppError from "@shared/errors/app-error";
+
+interface CreateUserDTO {
+  name: string;
+  password: string;
+  email: string;
+  driverLicense: string;
+  id?: string;
+  avatar?: string;
+}
 
 @injectable()
 class CreateUser {
@@ -12,7 +20,7 @@ class CreateUser {
     //
   }
 
-  async execute(params: CreateUserDTO): Promise<void> {
+  async execute(params: CreateUserDTO): Promise<User> {
     const { name, email, password, driverLicense } = params;
 
     const existingUser = await this.usersRepository.findByEmail(email);
@@ -23,12 +31,18 @@ class CreateUser {
 
     const passwordHash = await hash(password, 10);
 
-    await this.usersRepository.create({
+    const user = new User();
+
+    Object.assign(user, {
       name,
       email,
       password: passwordHash,
       driverLicense,
     });
+
+    await this.usersRepository.save(user);
+
+    return user;
   }
 }
 
