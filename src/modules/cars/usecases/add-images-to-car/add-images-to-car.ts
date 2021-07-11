@@ -5,10 +5,14 @@ import CarImage from "@modules/cars/externals/typeorm/entities/car-image";
 import AddImagesToCarDTO from "@modules/cars/repositories/dto/add-images-to-car";
 import CarsRepository from "@modules/cars/repositories/port/cars.repository";
 import AppError from "@shared/errors/app-error";
+import StorageProvider from "@shared/providers/storage-provider/port/storage-provider";
 
 @injectable()
 class AddImagesToCar {
-  constructor(@inject("CarsRepository") private carsRepository: CarsRepository) {
+  constructor(
+    @inject("CarsRepository") private carsRepository: CarsRepository,
+    @inject("StorageProvider") private storageProvider: StorageProvider
+  ) {
     //
   }
 
@@ -23,7 +27,9 @@ class AddImagesToCar {
       car.images = [];
     }
 
-    imagesNames.forEach((imageName) => {
+    await imagesNames.forEach(async (imageName) => {
+      await this.storageProvider.save(imageName, "cars");
+
       const image = new CarImage();
       image.imageName = imageName;
 

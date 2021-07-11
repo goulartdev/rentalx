@@ -11,7 +11,7 @@ import ensureIsAdmin from "../middlewares/ensure-admin";
 
 const carsRoutes = Router();
 
-const carImagesUpload = multer(uploadConfig.upload("./tmp/cars"));
+const carImagesUpload = multer(uploadConfig);
 
 const createCarsController = new CreateCarController();
 carsRoutes.post("/", ensureIsAdmin, createCarsController.handle);

@@ -2,7 +2,7 @@ import { inject, injectable } from "tsyringe";
 
 import UsersRepository from "@modules/accounts/repositories/port/users.repository";
 import AppError from "@shared/errors/app-error";
-import { deleteFile } from "@utils/file";
+import StorageProvider from "@shared/providers/storage-provider/port/storage-provider";
 
 interface UpdateUserAvatarParams {
   userId: string;
@@ -11,7 +11,10 @@ interface UpdateUserAvatarParams {
 
 @injectable()
 class UpdateUserAvatar {
-  constructor(@inject("UsersRepository") private usersRepository: UsersRepository) {
+  constructor(
+    @inject("UsersRepository") private usersRepository: UsersRepository,
+    @inject("StorageProvider") private storageProvider: StorageProvider
+  ) {
     //
   }
 
@@ -23,9 +26,10 @@ class UpdateUserAvatar {
     }
 
     if (user.avatar) {
-      // todo: put this path into a constant in somewhere
-      await deleteFile(`./tmp/avatar/${user.avatar}`);
+      await this.storageProvider.delete(user.avatar, "avatar");
     }
+
+    await this.storageProvider.save(avatarFile, "avatar");
 
     user.avatar = avatarFile;
 

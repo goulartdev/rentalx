@@ -34,7 +34,7 @@ class EtherealMailProvider implements MailProvider {
 
     const message = await this.client.sendMail({
       to,
-      from: "Rentalx <noreply@rentalx.com.br>",
+      from: `Rentalx <${process.env.APP_EMAIL}>`,
       subject,
       html: templateHTML,
     });

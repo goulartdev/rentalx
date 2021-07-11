@@ -4,6 +4,7 @@ import "express-async-errors";
 import swaggerUI from "swagger-ui-express";
 import YAML from "yamljs";
 
+import upload from "@config/upload";
 import createConnection from "@externals/typeorm";
 
 import errorHandler from "./middlewares/error-handler";
@@ -20,6 +21,8 @@ const app = express();
 app.use(express.json());
 
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDoc));
+
+app.use("/img", express.static(`${upload.tmpFolder}`));
 
 app.use(router);
 app.use(errorHandler);

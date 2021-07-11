@@ -31,7 +31,7 @@ export async function ensureAutheticated(
     throw new AppError("Invalid token", 400);
   }
 
-  // todo: encontrar outra forma de pegar esse repositório, ou trazer o usuário junto com a query do userTken
+  // todo: encontrar outra forma de pegar esse repositório
   const userRepository = new TypeORMUsersRepository();
   const user = await userRepository.findById(userId);
 
