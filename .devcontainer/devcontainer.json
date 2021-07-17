@@ -7,14 +7,14 @@
 	"workspaceFolder": "/workspace",
 
 	"settings": { 
-		"terminal.integrated.defaultProfile.linux": "/bin/bash"
+		"terminal.integrated.defaultProfile.linux": "bash"
 	},
 
 	"extensions": [
 		"dbaeumer.vscode-eslint"
 	],
 
-	"forwardPorts": [3000, 5432],
+	"forwardPorts": [3000, 5432, 6379],
 
 	// "postCreateCommand": "yarn install",
 
