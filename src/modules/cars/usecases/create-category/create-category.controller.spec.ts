@@ -36,7 +36,7 @@ describe("Create Category Controller", () => {
       password,
     });
 
-    const { refreshToken } = authResponse.body;
+    const { token } = authResponse.body;
 
     const response = await request(app)
       .post("/categories")
@@ -45,7 +45,7 @@ describe("Create Category Controller", () => {
         description: "category test 1 description",
       })
       .set({
-        Authorization: `Bearer ${refreshToken}`,
+        Authorization: `Bearer ${token}`,
       });
 
     expect(response.status).toBe(201);

@@ -1,8 +1,10 @@
+import env from "@config/env";
+
 import LocalStorageProvider from "./externals/local-storage.provider";
 import S3StorageProvider from "./externals/s3-storage.provider";
 import StorageProvider from "./port/storage-provider";
 
-const storage = process.env.STORAGE_PROVIDER || "local";
+const { storage } = env.provider;
 
 type optionsType = {
   // eslint-disable-next-line prettier/prettier

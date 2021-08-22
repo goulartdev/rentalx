@@ -1,7 +1,9 @@
 **/.classpath
 **/.dockerignore
 **/.env
+**/.env.*
 **/.git
+**/.github
 **/.gitignore
 **/.project
 **/.settings
@@ -22,3 +24,9 @@
 **/secrets.dev.yaml
 **/values.dev.yaml
 README.md
+.devcontainer
+.eslint*
+.prettierrc
+jest.*
+tsconfig.json
+babel.config.js

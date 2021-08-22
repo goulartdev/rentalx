@@ -2,6 +2,8 @@ import fs from "fs";
 import handlebars from "handlebars";
 import nodemailer, { Transporter } from "nodemailer";
 
+import env from "@config/env";
+
 import MailProvider, { MailParams } from "../port/mail-provider";
 
 class EtherealMailProvider implements MailProvider {
@@ -34,7 +36,7 @@ class EtherealMailProvider implements MailProvider {
 
     const message = await this.client.sendMail({
       to,
-      from: `Rentalx <${process.env.APP_EMAIL}>`,
+      from: `Rentalx <${env.app.email}>`,
       subject,
       html: templateHTML,
     });

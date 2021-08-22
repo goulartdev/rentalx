@@ -1,3 +1,5 @@
+import env from "@config/env";
+
 import app from "./app";
 
-app.listen(process.env.APP_PORT, () => console.log("Server is running on port 3000..."));
+app.listen(env.api.port, () => console.log(`Server is running on port ${env.api.port}...`));

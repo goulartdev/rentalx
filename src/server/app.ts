@@ -5,6 +5,7 @@ import "express-async-errors";
 import swaggerUI from "swagger-ui-express";
 import YAML from "yamljs";
 
+import env from "@config/env";
 import upload from "@config/upload";
 import createConnection from "@externals/typeorm";
 import * as Sentry from "@sentry/node";
@@ -24,17 +25,19 @@ const app = express();
 
 app.use(rateLimiter);
 
-Sentry.init({
-  dsn: process.env.SENTRY_DSN,
-  integrations: [
-    new Sentry.Integrations.Http({ tracing: true }),
-    new Tracing.Integrations.Express({ app }),
-  ],
-  tracesSampleRate: 1.0,
-});
+if (env.sentry.enabled) {
+  Sentry.init({
+    dsn: env.sentry.dns,
+    integrations: [
+      new Sentry.Integrations.Http({ tracing: true }),
+      new Tracing.Integrations.Express({ app }),
+    ],
+    tracesSampleRate: 1.0,
+  });
 
-app.use(Sentry.Handlers.requestHandler());
-app.use(Sentry.Handlers.tracingHandler());
+  app.use(Sentry.Handlers.requestHandler());
+  app.use(Sentry.Handlers.tracingHandler());
+}
 
 app.use(express.json());
 

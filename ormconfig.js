@@ -1,12 +1,13 @@
 const { SnakeNamingStrategy } = require("typeorm-naming-strategies");
+const { default: env } = require("./src/config/env");
 
 module.exports = {
-  "type": "postgres",
-  "host": process.env.DB_HOST,
-  "port": process.env.DB_PORT,
-  "username": process.env.DB_USER,
-  "password": process.env.DB_PASSWORD,
-  "database": process.env.DB_NAME,
+  "type": env.db.engine,
+  "host": env.db.host,
+  "port": env.db.port,
+  "username": env.db.user,
+  "password": env.db.password,
+  "database": env.db.name,
   "namingStrategy": new SnakeNamingStrategy,
   "entities": [
     "./src/modules/**/entities/*.ts",

@@ -2,6 +2,7 @@ import { resolve } from "path";
 import { inject, injectable } from "tsyringe";
 import { v4 as uuidV4 } from "uuid";
 
+import env from "@config/env";
 import UserToken from "@modules/accounts/externals/typeorm/entities/user_token";
 import UsersTokensRepository from "@modules/accounts/repositories/port/users-token.repository";
 import UsersRepository from "@modules/accounts/repositories/port/users.repository";
@@ -46,7 +47,7 @@ class SendResetPasswordEmail {
       templatePath,
       templateVars: {
         name: user.name,
-        link: `${process.env.RESET_EMAIL_URL}${token}`,
+        link: `${env.app.resetPasswordUrl}${token}`,
       },
     });
   }

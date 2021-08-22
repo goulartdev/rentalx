@@ -1,7 +1,7 @@
 import { sign, verify } from "jsonwebtoken";
 import { inject, injectable } from "tsyringe";
 
-import auth from "@config/auth";
+import env from "@config/env";
 import UserToken from "@modules/accounts/externals/typeorm/entities/user_token";
 import UsersTokensRepository from "@modules/accounts/repositories/port/users-token.repository";
 import AppError from "@shared/errors/app-error";
@@ -16,6 +16,8 @@ interface TokenResponse {
   token: string;
   refreshToken: string;
 }
+
+const { auth } = env;
 
 @injectable()
 class RefreshToken {
@@ -37,7 +39,7 @@ class RefreshToken {
 
     await this.usersTokensRepository.deleteById(userToken.id);
 
-    const refreshToken = sign({ email }, auth.refreshToken.secretHash, {
+    const refreshToken = sign({ email }, auth.refreshToken.hash, {
       subject: userId,
       expiresIn: auth.refreshToken.expiresIn,
     });
@@ -55,7 +57,7 @@ class RefreshToken {
       expiresDate,
     });
 
-    const newToken = sign({}, auth.token.secretHash, {
+    const newToken = sign({}, auth.token.hash, {
       subject: userId,
       expiresIn: auth.token.expiresIn,
     });

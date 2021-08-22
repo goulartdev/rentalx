@@ -2,8 +2,10 @@
 // https://github.com/microsoft/vscode-dev-containers/tree/v0.163.1/containers/javascript-node-postgres
 {
 	"name": "RentalX",
-	"dockerComposeFile": "docker-compose.yml",
-	"service": "app",
+	"dockerComposeFile": [
+		"../docker-compose.yml",
+		"docker-compose.yml"],
+	"service": "backend",
 	"workspaceFolder": "/workspace",
 
 	"settings": { 
@@ -14,9 +16,9 @@
 		"dbaeumer.vscode-eslint"
 	],
 
-	"forwardPorts": [3000, 5432, 6379],
+	"forwardPorts": [3000, 5432],
 
-	// "postCreateCommand": "yarn install",
+	"postCreateCommand": "yarn install",
 
 	"remoteUser": "node"
 }

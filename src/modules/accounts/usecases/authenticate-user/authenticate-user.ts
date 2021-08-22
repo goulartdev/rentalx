@@ -2,7 +2,7 @@ import { compare } from "bcrypt";
 import { sign } from "jsonwebtoken";
 import { inject, injectable } from "tsyringe";
 
-import auth from "@config/auth";
+import env from "@config/env";
 import UserToken from "@modules/accounts/externals/typeorm/entities/user_token";
 import UsersTokensRepository from "@modules/accounts/repositories/port/users-token.repository";
 import UsersRepository from "@modules/accounts/repositories/port/users.repository";
@@ -22,6 +22,8 @@ interface AuthPayload {
   token: string;
   refreshToken: string;
 }
+
+const { auth } = env;
 
 @injectable()
 class AuthenticateUser {
@@ -46,12 +48,12 @@ class AuthenticateUser {
       throw new AppError("E-mail or password incorrect", 400);
     }
 
-    const token = sign({}, auth.token.secretHash, {
+    const token = sign({}, auth.token.hash, {
       subject: user.id,
       expiresIn: auth.token.expiresIn,
     });
 
-    const refreshToken = sign({ email }, auth.refreshToken.secretHash, {
+    const refreshToken = sign({ email }, auth.refreshToken.hash, {
       subject: user.id,
       expiresIn: auth.refreshToken.expiresIn,
     });

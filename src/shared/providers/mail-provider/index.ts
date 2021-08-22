@@ -1,8 +1,10 @@
+import env from "@config/env";
+
 import EtherealMailProvider from "./externals/ethereal.provider";
 import SESMailProvider from "./externals/ses.provider";
 import MailProvider from "./port/mail-provider";
 
-const storage = process.env.MAIL_PROVIDER || "ethereal";
+const storage = env.provider.mail;
 
 type optionsType = {
   // eslint-disable-next-line prettier/prettier

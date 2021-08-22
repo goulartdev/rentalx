@@ -1,5 +1,9 @@
 .env
-tmp/*
+.env.*
+!.env.example
+
+tmp/**
+!tmp/*/
 
 # Logs
 logs

@@ -3,6 +3,8 @@ import fs from "fs";
 import handlebars from "handlebars";
 import nodemailer, { Transporter } from "nodemailer";
 
+import env from "@config/env";
+
 import MailProvider, { MailParams } from "../port/mail-provider";
 
 class SESMailProvider implements MailProvider {
@@ -11,8 +13,8 @@ class SESMailProvider implements MailProvider {
   constructor() {
     this.client = nodemailer.createTransport({
       SES: new SES({
-        apiVersion: process.env.AWS_SES_API_VERSION,
-        region: process.env.AWS_REGION,
+        apiVersion: env.aws.ses.apiVersion,
+        region: env.aws.region,
       }),
     });
   }
@@ -25,7 +27,7 @@ class SESMailProvider implements MailProvider {
 
     await this.client.sendMail({
       to,
-      from: `Rentalx <${process.env.APP_EMAIL}>`,
+      from: `Rentalx <${env.app.email}>`,
       subject,
       html: templateHTML,
     });

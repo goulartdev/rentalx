@@ -3,6 +3,7 @@ import fs from "fs";
 import mime from "mime";
 import { resolve } from "path";
 
+import env from "@config/env";
 import upload from "@config/upload";
 import AppError from "@shared/errors/app-error";
 import { deleteFile } from "@utils/file";
@@ -17,7 +18,7 @@ class S3StorageProvider implements StorageProvider {
 
   constructor() {
     this.client = new S3({
-      region: process.env.AWS_REGION,
+      region: env.aws.region,
     });
   }
 
@@ -41,7 +42,7 @@ class S3StorageProvider implements StorageProvider {
 
     await this.client
       .putObject({
-        Bucket: `${process.env.AWS_BUCKET}/${folder}`,
+        Bucket: `${env.aws.bucket}/${folder}`,
         Key: file,
         ACL: "public-read",
         Body: content,
@@ -57,7 +58,7 @@ class S3StorageProvider implements StorageProvider {
   async delete(file: string, folder: string): Promise<void> {
     await this.client
       .deleteObject({
-        Bucket: `${process.env.AWS_BUCKET}/${folder}`,
+        Bucket: `${env.aws.bucket}/${folder}`,
         Key: file,
       })
       .promise();
